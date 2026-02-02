@@ -28,6 +28,24 @@ from datetime import datetime, timedelta
 # Add or remove stock symbols here (use the ticker symbol, like "AAPL" for Apple)
 DEFAULT_STOCKS = ["AAPL", "GOOGL", "MSFT", "AMZN", "AVGO", "CRWV", "UBER", "NVDA", "META", "KLAR"]
 
+# Company names for each stock symbol
+STOCK_NAMES = {
+    "AAPL": "Apple Inc.",
+    "GOOGL": "Alphabet Inc.",
+    "MSFT": "Microsoft Corp.",
+    "AMZN": "Amazon.com Inc.",
+    "TSLA": "Tesla Inc.",
+    "NVDA": "NVIDIA Corp.",
+    "META": "Meta Platforms",
+    "NFLX": "Netflix Inc.",
+    "AMD": "AMD Inc.",
+    "INTC": "Intel Corp.",
+    "AVGO": "Broadcom Inc.",
+    "CRWV": "CoreWeave Inc.",
+    "UBER": "Uber Technologies",
+    "KLAR": "Klarna Group",
+}
+
 # How many days of historical data to fetch
 LOOKBACK_DAYS = 365
 
@@ -256,22 +274,23 @@ def main():
                     rec, reason, color = get_recommendation(current_price, sma_20, sma_50, rsi)
 
                     # Display summary card
-                    st.subheader(symbol)
+                    st.markdown(f"**{symbol}**")
+                    company_name = STOCK_NAMES.get(symbol, "")
+                    if company_name:
+                        st.caption(company_name)
                     st.metric(
-                        label="Current Price",
-                        value=f"${current_price:.2f}",
-                        delta=f"{price_change:+.2f}%"
+                        label="Price",
+                        value=f"${current_price:,.0f}" if current_price >= 1000 else f"${current_price:.2f}",
+                        delta=f"{price_change:+.1f}%"
                     )
 
-                    # Show recommendation with color
+                    # Show recommendation with color (compact)
                     if rec == "BUY":
                         st.success(f"🟢 {rec}")
                     elif rec == "SELL":
                         st.error(f"🔴 {rec}")
                     else:
                         st.warning(f"🟡 {rec}")
-
-                    st.caption(reason)
 
                     # Store for detailed view
                     all_stock_data[symbol] = data
