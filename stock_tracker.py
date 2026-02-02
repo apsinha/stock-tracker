@@ -26,7 +26,7 @@ from datetime import datetime, timedelta
 # ============================================
 
 # Add or remove stock symbols here (use the ticker symbol, like "AAPL" for Apple)
-DEFAULT_STOCKS = ["AAPL", "GOOGL", "MSFT", "AMZN", "AVGO", "CRWV", "UBER", NVDA", "META", "KLAR"]
+DEFAULT_STOCKS = ["AAPL", "GOOGL", "MSFT", "AMZN", "AVGO", "CRWV", "UBER", "NVDA", "META", "KLAR"]
 
 # How many days of historical data to fetch
 LOOKBACK_DAYS = 365
